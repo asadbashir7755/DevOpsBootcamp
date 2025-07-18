@@ -1,0 +1,6 @@
+---
+- name: install docker on server
+  hosts: EC2INSTANCES
+  become: true 
+  roles:
+    - chiragatcalfus.docker_nginx_port80_ansibleRole

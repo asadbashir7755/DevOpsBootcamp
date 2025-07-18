@@ -1,0 +1,21 @@
+---
+- name: create user with specific ID and Group
+  hosts: EC2INSTANCES
+  become: true
+
+  tasks:
+    - name: create group devops
+      group:
+        name: devops
+        state: present
+
+    - name: create a user asad with UID  and add to devops group
+      user:
+        name: asad    
+        name: asad
+        uid: 2025
+        group: devops
+        shell: /bin/bash
+        home: /home/asad
+        state: present
+        create_home: yes

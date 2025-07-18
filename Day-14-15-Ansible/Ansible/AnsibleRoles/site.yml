@@ -1,0 +1,7 @@
+---
+- name: install httpd on server and copy files
+  hosts: EC2INSTANCES
+  become: true 
+  roles:
+    - apache
+

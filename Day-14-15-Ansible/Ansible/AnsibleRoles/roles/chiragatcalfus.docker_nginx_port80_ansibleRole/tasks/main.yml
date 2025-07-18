@@ -1,0 +1,39 @@
+---
+# tasks file for installing Docker and running Nginx on Red Hat-based servers
+
+- name: Install required packages for Docker
+  dnf:
+    name:
+      - dnf-utils
+      - device-mapper-persistent-data
+      - lvm2
+    state: present
+
+- name: Add Docker repository to yum.repos.d
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+
+- name: Install Docker Engine
+  dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+
+- name: Enable and start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Run Nginx container on port 80
+  community.docker.docker_container:
+    name: nginx
+    image: nginx:latest
+    state: started
+    restart_policy: always
+    published_ports:
+      - "8080:80"
+

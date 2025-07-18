@@ -1,0 +1,22 @@
+---
+- name: install and run nginx
+  hosts: EC2INSTANCES
+  become: true
+
+  tasks:
+    - name: install nginx
+      dnf:
+        name: nginx
+        state: present
+
+    - name: ensure nginx is running 
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+
+
+        
+
+

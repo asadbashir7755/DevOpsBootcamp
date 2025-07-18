@@ -1,0 +1,26 @@
+---
+- name: Install Apache and deploy HTML file (RHEL/CentOS)
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install Apache HTTPD (RHEL/CentOS)
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Apache service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Copy index.html to Apache web directory
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0644'
+          
